@@ -1,12 +1,10 @@
 (ns view.layout
    (:require [hiccup.page :as h]
-            [hiccup.form :as form]
-             [ring.util.anti-forgery :as anti-forgery]
-             [noir.session :as session]
-              [noir.validation :as valid]
+             [hiccup.form :as form]   
              [model.model :as model]            
              ))
 
+;;page template
 (defn common [title & body]
   (h/html5
    [:head
@@ -15,7 +13,7 @@
     [:meta {:name "viewport" :content
             "width=device-width, initial-scale=1, maximum-scale=1"}]
     [:title title]
-    (h/include-css "/stylesheets/bootstrap.css")
+    ;;(h/include-css "/stylesheets/bootstrap.css")
     ]
    
    [:body
