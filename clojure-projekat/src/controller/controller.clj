@@ -16,6 +16,8 @@
                   [noir.validation :as valid]
                   [noir.util.middleware :as util]
                   [view.index :as index]
+                  [view.registration :refer [registration]]
+                  [view.login :refer [login]]
                   )
   )
 
@@ -25,11 +27,18 @@
   (GET "/" [] (index/index))
   
   )
-
+(defroutes app-routes
+  (route/resources "/")
+  (route/not-found "Not Found"))
 
 (def app
 (->
-(handler/site (routes index))
+(handler/site (routes
+                registration
+                index
+                login
+                app-routes
+                ))
 (session/wrap-noir-session 
 {:store (memory-store)})
  (valid/wrap-noir-validation))

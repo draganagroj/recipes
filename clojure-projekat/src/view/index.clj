@@ -12,7 +12,7 @@
 (defn index
    []
   ( layout/common "Index"
-         
+                   (session/get :user)  
            )
   )
 

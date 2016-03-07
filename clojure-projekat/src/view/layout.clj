@@ -13,7 +13,8 @@
     [:meta {:name "viewport" :content
             "width=device-width, initial-scale=1, maximum-scale=1"}]
     [:title title]
-    ;;(h/include-css "/stylesheets/bootstrap.css")
+    (h/include-css "/stylesheets/bootstrap.css")
+      (h/include-css "/stylesheets/style.css")
     ]
    
    [:body
