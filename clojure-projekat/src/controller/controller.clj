@@ -18,6 +18,7 @@
                   [view.index :as index]
                   [view.registration :refer [registration]]
                   [view.login :refer [login]]
+                  [view.new-recipe :refer [recipe]]
                   )
   )
 
@@ -34,9 +35,11 @@
 (def app
 (->
 (handler/site (routes
+                recipe
                 registration
                 index
                 login
+               
                 app-routes
                 ))
 (session/wrap-noir-session 

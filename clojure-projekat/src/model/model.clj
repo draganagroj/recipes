@@ -20,11 +20,27 @@
 
 ;;inserting new user into db
 (defn create-user [name pass]
-  
  (sql/execute! spec ["INSERT INTO user (username,password)  VALUES(?,?) " name pass])
-  
   )
+
+;;getting comments for recipe
+  (defn get-comments [recipe]
+    (into  [] (sql/query spec ["SELECT comment.text,user.username  FROM user JOIN comment ON user.id=comment.user JOIN recipe ON recipe.id=comment.recipe WHERE recipe.title = ? " recipe])
+  )
+    )
+  ;;inserting comment
+  (defn insert-commment [comment]
+    (sql/execute! spec ["INSERT INTO comment (text, user,recipe) VALUES (?,?,?)"] )
+    )
+  ;;getting the recipe 
+  (defn get-recipe [id]
+    (into [] (flatten(subvec(sql/query spec ["SELECT * FROM recipe WHERE recipe.id=?" id] :as-arrays? true )1))))
   
+
+;;update rating
+(defn update-rating [value user]
+   (sql/execute! spec ["UPDATE rating SET rating.value=? WHERE rating.user=?"] )
+  )
 
 ;;getting the user from db
 (defn user [name pass]
@@ -44,6 +60,11 @@
 (defn user-id[name]
    (:id(get(into  [] (sql/query spec ["SELECT id FROM user WHERE username = ? " name ])
   )0)))
+
+  ;;insert recipe  
+(defn insert-recipe [title body user]
+  (sql/execute! spec ["INSERT INTO recipe (title,body,user) VALUES (?,?,?)" title body (user-id user)] )
+  )
 
 (def success "Success")
 ;;inserting default rating for all recepies

@@ -6,13 +6,16 @@
               [noir.validation :as valid]
              [model.model :as model]
              [view.layout :as layout]
+             
    ) )
 
 
 (defn index
    []
   ( layout/common "Index"
+                  (layout/navbar)
                    (session/get :user)  
+                   (layout/footer)
            )
   )
 

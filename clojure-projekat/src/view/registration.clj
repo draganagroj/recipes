@@ -14,22 +14,29 @@
 ;; registration page
 (defn registration-page [message]
 (layout/common "Register"
-(form/form-to  {:role "form" :class "form-horizontal"} [:post "/register"]
-                 (anti-forgery/anti-forgery-field)
-              [:div {:class "form-group"}
-(form/label {:class "control-label"} "name" "username:")
-(form/text-field  {:class "form-control"}"name")]
+               
+[:div.col-md-offset-3.col-md-6 
+ [:div {:class "border-div"}
+ [:h2.col-md-offset-4 {:id "reg-title"} "Registration form"]
+(form/form-to  {:role "form" :id "reg-form" :class "form-horizontal"} [:post "/register"]
+                 ;;(anti-forgery/anti-forgery-field)
+[:div {:class "form-group"}
+(form/label {:class "reg-label control-label col-md-2"} "name" "username:")
+[:div.col-md-9
+(form/text-field  {:class "form-control"}"name")]]
 [:br]
  [:div {:class "form-group"}
-(form/label {:class "control-label"} "pass" "password:")
-(form/password-field {:class "form-control"} "pass")]
+(form/label {:class "reg-label control-label col-md-2"} "pass" "password:")
+[:div.col-md-9
+(form/password-field {:class "form-control"} "pass")]]
 [:br]
  [:div {:class "form-group"}
-(form/label {:class "control-label"}"pass1" "retype password:")
-(form/password-field  {:class "form-control"}"pass1")]
+(form/label {:class "reg-label control-label col-md-2"}"pass1" "retype password:")
+[:div.col-md-9
+(form/password-field  {:class "form-control"}"pass1")]]
 [:br]
-(form/submit-button {:class "btn btn-default"} "create account"))
-
+(form/submit-button {:class "btn btn-info col-md-offset-5"} "create account"))
+]
 (when
 (and  (has-value? message) (not(= message "Error"))) 
 [:div
@@ -41,7 +48,7 @@
   [:div {:id "first"} message ]
  [:div.alert.alert-danger message]])
 
-
+]
   )
 )
 

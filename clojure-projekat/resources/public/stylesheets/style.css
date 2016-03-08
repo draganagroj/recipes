@@ -4,3 +4,59 @@
 {
 	visibility: hidden;
 }
+.content{
+	background-image: url("/images/background.jpg") ;
+	background-size:cover
+	
+}
+
+#reg-form{
+	margin-top:5%;
+}
+#reg-title{
+	color:#777;
+	margin-top:7%
+}
+
+.border-div{
+	 border-radius: 25px;
+    border: 1px solid #46b8da;
+    width:100%;
+    padding-bottom:5%;
+    margin-top:15%
+}
+#login-form{
+	margin-top:5%;
+}
+
+#txt-area{
+	height:200px
+	
+}
+
+.reg-label{
+	color:#777
+	
+}
+.fixed-footer{
+	width: 100%;
+	height: 50px;
+	position: fixed; 
+	bottom: 0px;
+	background-color:#F8F8F8;
+	border:1px solid  transparent;
+	border-color:#E7E7E7;
+	border-radius: 5px;
+
+	
+}
+#off-padding{
+	padding-left:0px !important;
+	padding-right:0px !important
+	
+}
+
+#footer-txt{
+	color:#777;
+	text-align: center	
+}

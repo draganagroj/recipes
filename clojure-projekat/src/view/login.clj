@@ -12,26 +12,28 @@
 
   
   (defn login-page
- [& message]  
+ [message]  
   (layout/common "Logging"
-(form/form-to  {:role "form" :class "form-horizontal"}[:post "/login"]
-(anti-forgery/anti-forgery-field)
+[:div.col-md-offset-3.col-md-6 
+  [:div {:class "border-div"}
+    [:h2.col-md-offset-4 {:id "reg-title"} "Login form"]
+(form/form-to  {:role "form" :id "login-form" :class "form-horizontal"}[:post "/login"]
+;;(anti-forgery/anti-forgery-field)
 [:div {:class "form-group"}
-(form/label {:class "control-label"} "name" "username:")
-(form/text-field  {:class "form-control"} :name "")]
+(form/label {:class "reg-label control-label col-md-2"} "name" "username:")
+[:div.col-md-9
+(form/text-field  {:class "form-control"} :name "")]]
 [:br]
 [:div {:class "form-group"}
- (form/label {:class "control-label"} "pass" "password:")
-(form/password-field  {:class "form-control"} :pass )]
+ (form/label {:class "reg-label control-label col-md-2"} "pass" "password:")
+ [:div.col-md-9
+(form/password-field  {:class "form-control"} :pass )]]
 [:br]
-(form/submit-button {:class "btn btn-default"} "login"))
- (if (= message "Login error" )
-   
+(form/submit-button {:class "btn btn-info col-md-offset-5"} "login"))]
+ (when (= message "Login error" )
  [:div.alert.alert-danger message]
- 
- 
    )
- 
+ ]
   
   )
    
@@ -42,12 +44,12 @@
              
                (redirect "/"))
            
-           (login-page "Error login"))
+           (login-page "Login error"))
            )         
    
   
 (defroutes login
-    (GET "/login" [] (login-page ))
+    (GET "/login" [] (login-page ""))
   (POST "/login" [name pass]        
           (if (= true (clojure.string/blank? name))
              (login-page "Login error")
