@@ -50,10 +50,14 @@
   
 (defroutes login
     (GET "/login" [] (login-page ""))
+    (GET "/logout" [] 
+         (do
+         (session/clear!)
+         (redirect "/")))
   (POST "/login" [name pass]        
           (if (= true (clojure.string/blank? name))
              (login-page "Login error")
             (login-check name pass)
             )         
-          ) ) 
- 
+          ) 
+ )

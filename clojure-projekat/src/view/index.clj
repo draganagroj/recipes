@@ -14,7 +14,7 @@
    []
   ( layout/common "Index"
                   (layout/navbar)
-                   (session/get :user)  
+                   
                    (layout/footer)
            )
   )

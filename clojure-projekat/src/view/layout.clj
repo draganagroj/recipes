@@ -34,28 +34,36 @@
    [:ul.nav.navbar-nav
     [:li [:a {:href "/"}"Home" ]]
      [:li [:a {:href "/new"}"Add recipe" ]]
+      
     ]
-   (when (=(session/get :user) "")
-    [:ul.nav.navbar-nav.navbar-right
+   (if
+     (not(nil?(session/get :user)))
+   (list [:ul.nav.navbar-nav.navbar-right
+     [:li [:a {:href "/#"}
+           [:span.glyphicon.glyphicon-user]
+           (session/get :user)]]
+       [:li [:a {:href "/logout"}
+           [:span.glyphicon.glyphicon-log-out]
+           "Logout"]
+     ]
+    ])
+   
+   
+   (list
+   [:ul.nav.navbar-nav.navbar-right
      [:li [:a {:href "/register"}
            [:span.glyphicon.glyphicon-user]
            "Sign up"]]
       [:li [:a {:href "/login"}
            [:span.glyphicon.glyphicon-log-in]
            "Login"]]
-     ]
+     ])
     )
-   (when (not=(session/get :user) "")
-     [:ul.nav.navbar-nav.navbar-right
-     [:li [:a {:href "/register"}
-           [:span.glyphicon.glyphicon-user]
-           (session/get :user)]]
-     
-    ])
    ]]
    
   )
 
+ 
 ;;footer
 (defn footer []
   
