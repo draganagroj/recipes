@@ -1,13 +1,19 @@
 @CHARSET "ISO-8859-1";
 
+html{
+	height:100%
+}
 #first
 {
 	visibility: hidden;
 }
 .content{
 	background-image: url("/images/background.jpg") ;
-	background-size:cover
+	background-size:cover;
 	
+}
+.middle{
+	padding-bottom:50px
 }
 
 #reg-form{
@@ -17,7 +23,18 @@
 	color:#777;
 	margin-top:7%
 }
-
+#like{
+	background-image: url("/images/like.png") ;
+	background-size: 100% 100%;
+    width: 28px;
+    background-repeat-x: no-repeat;
+}
+#dislike{
+	background-image: url("/images/dislike.png") ;
+	background-size: 100% 100%;
+    width: 28px;
+    background-repeat-x: no-repeat;
+}
 .border-div{
 	 border-radius: 25px;
     border: 1px solid #46b8da;
@@ -37,20 +54,39 @@
 .title{
 	color: #555
 }
+#search-form{
+	margin-top:5px
+	
+}
+
+#button-image{
+	
+	background-image: url("/images/search.png");
+	background-size:100% 100%
+}
 .user{
 	font-style:italic;
 	color: #999
 	
 }
+#recipe{
+	
+	background-color:transparent;
+	border:none
+
+	
+}
 #txt-area-2{
 	 border-radius: 25px;
     border: 2px dashed #777;
-	min-height:100%;
-		height:500px;
+	
 		 border-radius: 15px 50px;
-		 background-color:transparent;
-	
-	
+		 background-color:transparent;	
+}
+.form-btn{
+	margin-top:20px;
+	display:inline;
+	    margin-left: 20px
 }
 .message{
 	margin-top:10px
@@ -61,11 +97,18 @@
 	color:#777
 	
 }
+.wrapper{
+	min-height:100%;
+	position:relative;
+	background-image: url("/images/background.jpg") ;
+	background-size:cover;
+}
 .fixed-footer{
 	width: 100%;
 	height: 50px;
-	position: fixed; 
-	bottom: 0px;
+	position: absolute; 
+	bottom: 0;
+	
 	background-color:#F8F8F8;
 	border:1px solid  transparent;
 	border-color:#E7E7E7;

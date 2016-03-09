@@ -14,15 +14,14 @@
     [:meta {:name "viewport" :content
             "width=device-width, initial-scale=1, maximum-scale=1"}]
     [:title title]
-    (h/include-css "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
-      (h/include-css "/stylesheets/style.css"
-                    
-                     ) 
+    (h/include-css "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+       "/stylesheets/style.css"  ) 
     ]
-   
-   [:body
-    {:class "content" }
-   body]))
+  
+   [:body {:style "height:100%"}
+     [:div.wrapper
+  
+   body]]))
 
 ;;navbar
 (defn navbar []
@@ -41,7 +40,11 @@
    (if
      (not(nil?(session/get :user)))
    (list [:ul.nav.navbar-nav.navbar-right
-     [:li [:a {:href "/#"}
+          [:li 
+          (form/form-to  {:role "form" :id "search-form" :class "form-inline"}[:post "/"]
+          (form/text-field {:class "form-control" :placeholder "search"} :search "")
+          (form/submit-button  {:class "btn"} "submit"))]
+    [:li [:a {:href "/#"}
            [:span.glyphicon.glyphicon-user]
            (session/get :user)]]
        [:li [:a {:href "/logout"}
@@ -53,6 +56,13 @@
    
    (list
    [:ul.nav.navbar-nav.navbar-right
+     [:li 
+          (form/form-to  {:role "form" :id "search-form" :class "form-inline"}[:post "/"]
+          
+           (form/text-field {:class "form-control" :placeholder "search"} :search "")    
+          (form/submit-button {:class "btn" } 
+         "Search"
+           ))]
      [:li [:a {:href "/register"}
            [:span.glyphicon.glyphicon-user]
            "Sign up"]]

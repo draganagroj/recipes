@@ -44,9 +44,13 @@
   (defn username-recipe [id]
    (get-username(:user(get-recipe id)))
     )
-  
+  ;;recipe
   (defn recipe-details [id]
     (conj (get-recipe id) (username-recipe id))
+    )
+  
+  (defn search-recipe [search]
+    
     )
 ;;update rating
 (defn update-rating [value user]
