@@ -34,9 +34,20 @@
     )
   ;;getting the recipe 
   (defn get-recipe [id]
-    (into [] (flatten(subvec(sql/query spec ["SELECT * FROM recipe WHERE recipe.id=?" id] :as-arrays? true )1))))
+    (get(into [] (sql/query spec ["SELECT * FROM recipe WHERE recipe.id=?" id]  ))0))
   
-
+  ;;getting the username of id 
+  (defn get-username[id] 
+      (get(into [] (sql/query spec ["SELECT username FROM user WHERE user.id=?" id]  ))0))
+  
+  ;;getting the userame of user who wrote recipe
+  (defn username-recipe [id]
+   (get-username(:user(get-recipe id)))
+    )
+  
+  (defn recipe-details [id]
+    (conj (get-recipe id) (username-recipe id))
+    )
 ;;update rating
 (defn update-rating [value user]
    (sql/execute! spec ["UPDATE rating SET rating.value=? WHERE rating.user=?"] )
@@ -63,10 +74,10 @@
 
   ;;insert recipe  
 (defn insert-recipe [title body user]
-  (sql/execute! spec ["INSERT INTO recipe (title,body,user) VALUES (?,?,?)" title body (user-id user)] )
-  )
+  (get(into [](sql/execute! spec ["INSERT INTO recipe (title,body,user) VALUES (?,?,?)" title body (user-id user)] )
+  )0))
 
-(def success "Success")
+
 ;;inserting default rating for all recepies
 (defn rating-def 
   [name]

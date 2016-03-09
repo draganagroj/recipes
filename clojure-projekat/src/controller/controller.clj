@@ -19,6 +19,7 @@
                   [view.registration :refer [registration]]
                   [view.login :refer [login]]
                   [view.new-recipe :refer [recipe]]
+                  [view.show-recipe :refer [show]]
                   )
   )
 
@@ -36,6 +37,7 @@
 (->
 (handler/site (routes
                 recipe
+                show
                 registration
                 index
                 login

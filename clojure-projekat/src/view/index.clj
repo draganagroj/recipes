@@ -1,7 +1,6 @@
 (ns view.index
   (:require [hiccup.page :as h]
-            [hiccup.form :as form]
-             [ring.util.anti-forgery :as anti-forgery]
+            [hiccup.form :as form]        
              [noir.session :as session]
               [noir.validation :as valid]
              [model.model :as model]

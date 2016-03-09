@@ -34,6 +34,29 @@
 	
 }
 
+.title{
+	color: #555
+}
+.user{
+	font-style:italic;
+	color: #999
+	
+}
+#txt-area-2{
+	 border-radius: 25px;
+    border: 2px dashed #777;
+	min-height:100%;
+		height:500px;
+		 border-radius: 15px 50px;
+		 background-color:transparent;
+	
+	
+}
+.message{
+	margin-top:10px
+	
+}
+
 .reg-label{
 	color:#777
 	

@@ -2,11 +2,10 @@
   (:require [hiccup.page :as h]
             [hiccup.form :as form]
              [ring.util.anti-forgery :as anti-forgery]
-             [noir.session :as session]
-              [noir.validation :as valid]
+             [noir.session :as session] 
              [model.model :as model]
              [view.layout :as layout]
-             [compojure.core :refer [defroutes GET POST routes]]
+             [compojure.core :refer [defroutes GET POST ]]
              [noir.response :refer [redirect]]
   ))
 
@@ -18,7 +17,6 @@
   [:div {:class "border-div"}
     [:h2.col-md-offset-4 {:id "reg-title"} "Login form"]
 (form/form-to  {:role "form" :id "login-form" :class "form-horizontal"}[:post "/login"]
-;;(anti-forgery/anti-forgery-field)
 [:div {:class "form-group"}
 (form/label {:class "reg-label control-label col-md-2"} "name" "username:")
 [:div.col-md-9

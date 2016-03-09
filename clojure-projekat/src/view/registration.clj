@@ -1,14 +1,12 @@
 (ns view.registration
    (:require [hiccup.page :as h]
             [hiccup.form :as form]
-             [ring.util.anti-forgery :as anti-forgery]
              [noir.session :as session]
-              [noir.validation :as valid]
              [model.model :as model]
              [view.layout :as layout]
              [compojure.core :refer [defroutes GET POST routes]]
              [noir.response :refer [redirect]]
-              [noir.validation :refer [rule errors? has-value? on-error]]
+              [noir.validation :refer [has-value?]]
              )
   )
 ;; registration page
@@ -18,8 +16,7 @@
 [:div.col-md-offset-3.col-md-6 
  [:div {:class "border-div"}
  [:h2.col-md-offset-4 {:id "reg-title"} "Registration form"]
-(form/form-to  {:role "form" :id "reg-form" :class "form-horizontal"} [:post "/register"]
-                 ;;(anti-forgery/anti-forgery-field)
+(form/form-to  {:role "form" :id "reg-form" :class "form-horizontal"} [:post "/register"]             
 [:div {:class "form-group"}
 (form/label {:class "reg-label control-label col-md-2"} "name" "username:")
 [:div.col-md-9

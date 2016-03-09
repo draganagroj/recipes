@@ -33,8 +33,10 @@
     ]
    [:ul.nav.navbar-nav
     [:li [:a {:href "/"}"Home" ]]
+    (when (not (nil? (session/get :user)))
      [:li [:a {:href "/new"}"Add recipe" ]]
       
+    )
     ]
    (if
      (not(nil?(session/get :user)))
