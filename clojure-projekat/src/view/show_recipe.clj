@@ -32,11 +32,13 @@
 (defn like-dis [id]
    [:div.row
    [:div{:style "margin-top:20px; margin-left:44% "}
-   (form/form-to  {:role "form" :class "form-btn"}[:post "/show/:id" id]
-                  (form/submit-button {:class "btn btn-default" :id "like"} "")
+   (form/form-to  {:role "form" :class "form-btn"} [:post (str "/show/" id) ] 
+                  (form/text-field {:style "display:none"} "like" "like")
+                  (form/submit-button {:class "btn btn-default" :id "like"} "" )
                   )
-   (form/form-to  {:role "form" :class "form-btn" }[:post "/show/:id" id]
-                  (form/submit-button {:class "btn btn-default" :id "dislike"} "")
+   (form/form-to  {:role "form" :class "form-btn" } [:post (str "/show/" id) ]
+                   (form/text-field {:style "display:none"} "dislike" "dislike")
+                  (form/submit-button {:class "btn btn-default" :id "dislike"} "" )
                   )
    ]]
   )
@@ -45,7 +47,7 @@
 (defn comment-form [id]
    [:div.row 
    [:div.col-md-offset-2.col-md-8 {:style "margin-top:20px"}
-     (form/form-to  {:role "form" :class "form-btn"}[:post "/show/:id" id]
+     (form/form-to  {:role "form" :class "form-btn"}[:post (str "/show/" id) ]
                   [:div {:class "form-group"}
                      (form/label {:class "reg-label control-label col-md-2"} "c" "leave comment")
                      [:div.col-md-9
@@ -75,13 +77,34 @@
     )
   )
 
+(defn recommended-titles [id]
+  (into [] (filter  #(not(= (:title(model/recipe-details id)) %) ) (model/return-titles (session/get :user)) )
+  ) 
+  )
+
+(defn recomendation [id]
+ (for [title (recommended-titles id)]
+   [:div.row 
+     [:div.col-md-offset-3.col-md-6
+    title]]
+   )
+  )
+
 (defn show-selected
   [id]
    (layout/common "Recipe"
                   (layout/navbar)
                    (recipe-display id)
-                 (like-dis id)
-                 (comment-form id)
+                   ( when (not(nil?(session/get :user)))
+                (like-dis id))
+                   ( when (not(nil?(session/get :user)))
+                 
+                 (recomendation id)) 
+                   
+                ( when (not(nil?(session/get :user)))
+                 
+                 (comment-form id))
+                
                  (comments id)
                    (layout/footer)
            )
@@ -93,4 +116,20 @@
   (GET "/show/:id" [id]
        (show-selected id )
        )
-  )
+ (POST "/show/:id" [ comment id like dislike] (cond
+                                                (not(nil? comment ))
+                                                (do
+                                                (model/insert-commment comment (session/get :user) id)
+                                                (show-selected id))
+                                     (not(nil? like ))
+                                     (do
+                                        (model/update-rating 1 (session/get :user) id)
+                                        
+                                        (show-selected id))
+                                     
+                                     (not(nil? dislike ))
+                                     (do
+                                        (model/update-rating -1 (session/get :user) id)
+                                        (show-selected id))
+                                        )
+  ))

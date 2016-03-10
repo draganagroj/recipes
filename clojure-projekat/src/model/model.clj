@@ -28,10 +28,7 @@
     (into  [] (sql/query spec ["SELECT comment.text,user.username  FROM user JOIN comment ON user.id=comment.user JOIN recipe ON recipe.id=comment.recipe WHERE recipe.id = ? " id])
   )
     )
-  ;;inserting comment
-  (defn insert-commment [comment]
-    (sql/execute! spec ["INSERT INTO comment (text, user,recipe) VALUES (?,?,?)"] )
-    )
+ 
   ;;getting the recipe 
   (defn get-recipe [id]
     (get(into [] (sql/query spec ["SELECT * FROM recipe WHERE recipe.id=?" id]  ))0))
@@ -52,10 +49,6 @@
   (defn search-recipe [search]
     
     )
-;;update rating
-(defn update-rating [value user]
-   (sql/execute! spec ["UPDATE rating SET rating.value=? WHERE rating.user=?"] )
-  )
 
 ;;getting the user from db
 (defn user [name pass]
@@ -76,10 +69,20 @@
    (:id(get(into  [] (sql/query spec ["SELECT id FROM user WHERE username = ? " name ])
   )0)))
 
+ ;;inserting comment
+  (defn insert-commment [comment,user,recipe]
+    (sql/execute! spec ["INSERT INTO comment (text, user,recipe) VALUES (?,?,?)" comment (user-id user) recipe ] )
+    )
+  
   ;;insert recipe  
 (defn insert-recipe [title body user]
   (get(into [](sql/execute! spec ["INSERT INTO recipe (title,body,user) VALUES (?,?,?)" title body (user-id user)] )
   )0))
+
+;;update rating
+(defn update-rating [value user recipe]
+   (sql/execute! spec ["UPDATE rating SET rating.value=? WHERE rating.user=? AND rating.recipe=?" value (user-id user) recipe])
+  )
 
 
 ;;inserting default rating for all recepies
@@ -123,3 +126,52 @@
   "Computes the Euclidean distance between two sequences"
   [a b]
   (math/sqrt ( euclidean-squared-distance a b)))
+
+;;remove user from map
+(defn remove-current [user]
+  (dissoc (user-list) (keyword user) )
+  )
+
+;;user ratings
+(defn user-vector [user]
+ ( (keyword user) (user-list))
+  )
+
+(defn find-closest
+  "Find closest user in user map to supplied user"
+  [user users]   
+   (apply min-key (partial euclidean-distance user) (vals users)))
+ ;;gets vestor of ratings of most similar users
+(defn get-closest [user]
+  (find-closest (user-vector user) (remove-current user))
+  )
+
+;;get username of most similar user
+(defn get-key [user]
+(get (get 
+       (into [](filter
+                 #(= 
+                  (get-closest user)
+                  (val %)
+                  )
+              (user-list)
+                ))0)0))
+
+
+
+;;return similar user
+(defn return-similar [user]
+   
+  (into [] (sql/query spec [ "SELECT  user.username, recipe.title, rating.value FROM user JOIN rating ON user.id=rating.user JOIN recipe ON recipe.id=rating.recipe WHERE user.username=?" 
+ (name(get-key user)) ]))
+  )
+
+;;return liked
+(defn liked [user]
+  (vec(filter #(> ( :value %) 0)  (return-similar user))
+ ))
+;;return titiles which the most similar user liked
+(defn return-titles [user]
+  (vec(map  :title (liked user)))
+)
+
