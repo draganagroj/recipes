@@ -18,28 +18,28 @@
 [:div {:class "form-group"}
 (form/label {:class "reg-label control-label col-md-2"} "title" "Title:")
 [:div.col-md-9
-(form/text-field  {:class "form-control"} :title "")]]
+(form/text-field  {:class "form-control" :required "required" } :title "")]]
 [:br]
 [:div {:class "form-group"}
  (form/label {:class "reg-label control-label col-md-2"} "text" "Text:")
  [:div.col-md-9
-(form/text-area  { :id "txt-area" :class "form-control"} :text )]]
+(form/text-area  { :id "txt-area" :class "form-control"  :required "required" } :text )]]
 [:br]
 (form/submit-button {:class "btn btn-info col-md-offset-6"} "save"))
+
 (when
- (= message 1) 
+(not(= message ""))
 [:div
+  [:div {:class "first"} message ]
 [:div.alert.alert-success.col-md-offset-2.col-md-9.message "Your recipe has been saved"] ])
-(when
- (and (not(= message 1)) (not(= message "")) )
-[:div
-[:div.alert.alert-danger.col-md-offset-2.col-md-9.messsage "Error occured during saving"] ]
- )
+
   (layout/footer)
   ))
 
 (defroutes recipe
   
  (GET "/new" [] (new-recipe ""))
-  (POST "/new" [title text] (new-recipe(model/insert-recipe title text (session/get :user)) ))
-  )
+  (POST "/new" [title text] (do(model/insert-recipe title text (session/get :user))
+                              (new-recipe (model/insert-def-rat ) )
+                              )))
+  

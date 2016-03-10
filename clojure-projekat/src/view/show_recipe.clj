@@ -82,11 +82,16 @@
   ) 
   )
 
+(defn get-id [title]
+  (str "/show/"(model/recipe-id title))
+  )
+
 (defn recomendation [id]
+  [:div.col-md-offset-3.col-md-6 "Recommended recepies"]
  (for [title (recommended-titles id)]
    [:div.row 
      [:div.col-md-offset-3.col-md-6
-    title]]
+   [:a {:href (get-id title)} title]]]
    )
   )
 
@@ -124,12 +129,13 @@
                                      (not(nil? like ))
                                      (do
                                         (model/update-rating 1 (session/get :user) id)
-                                        
+                                        (recommended-titles id)
                                         (show-selected id))
                                      
                                      (not(nil? dislike ))
                                      (do
                                         (model/update-rating -1 (session/get :user) id)
+                                         (recommended-titles id)
                                         (show-selected id))
                                         )
   ))

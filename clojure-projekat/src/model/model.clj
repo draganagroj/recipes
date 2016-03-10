@@ -18,6 +18,10 @@
 (defn all-users []
    (into [] (flatten(subvec(sql/query spec ["SELECT username FROM user"] :as-arrays? true )1))))
 
+;;get id of all users
+(defn all-users-id []
+  (into [] (flatten(subvec(sql/query spec ["SELECT id FROM user"] :as-arrays? true )1)))
+  )
 ;;inserting new user into db
 (defn create-user [name pass]
  (sql/execute! spec ["INSERT INTO user (username,password)  VALUES(?,?) " name pass])
@@ -78,7 +82,15 @@
 (defn insert-recipe [title body user]
   (get(into [](sql/execute! spec ["INSERT INTO recipe (title,body,user) VALUES (?,?,?)" title body (user-id user)] )
   )0))
-
+;;max recipe id
+(defn max-id []
+ (:max(get(into [](sql/query spec ["SELECT max(id) as max FROM recipe"]))0) )
+  )
+;;insert default rating of all users for new recipe
+(defn insert-def-rat []
+  (for [user (all-users-id)]
+  (sql/execute! spec ["INSERT INTO rating (value,user,recipe) VALUES (?,?,?)" 0 user (max-id)])
+  ))
 ;;update rating
 (defn update-rating [value user recipe]
    (sql/execute! spec ["UPDATE rating SET rating.value=? WHERE rating.user=? AND rating.recipe=?" value (user-id user) recipe])

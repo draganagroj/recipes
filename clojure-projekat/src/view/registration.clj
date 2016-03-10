@@ -37,12 +37,12 @@
 (when
 (and  (has-value? message) (not(= message "Error"))) 
 [:div
-  [:div {:id "first"} message ]
+  [:div {:class "first"} message ]
 [:div.alert.alert-success "You successfuly registered"] ])
   
 (when (and (has-value? message ) (= message "Error") )
   [:div
-  [:div {:id "first"} message ]
+  [:div {:class "first"} message ]
  [:div.alert.alert-danger message]])
 
 ]
