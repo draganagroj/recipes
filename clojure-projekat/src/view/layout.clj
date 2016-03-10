@@ -20,8 +20,8 @@
   
    [:body {:style "height:100%"}
      [:div.wrapper
-  
-   body]]))
+  [:div.middle
+   body]]]))
 
 ;;navbar
 (defn navbar []

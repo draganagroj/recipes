@@ -76,17 +76,23 @@ html{
 
 	
 }
+.comments{
+	    border: 2px dashed #777;
+    border-radius: 10px ;
+    background-color: transparent;
+    margin-top:20px;
+   
+}
 #txt-area-2{
-	 border-radius: 25px;
-    border: 2px dashed #777;
 	
-		 border-radius: 15px 50px;
+    	border: 2px dashed #777;
+		 border-radius: 15px 60px;
 		 background-color:transparent;	
 }
 .form-btn{
 	margin-top:20px;
 	display:inline;
-	    margin-left: 20px
+	    margin-left: 10px
 }
 .message{
 	margin-top:10px

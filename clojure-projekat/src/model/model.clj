@@ -24,8 +24,8 @@
   )
 
 ;;getting comments for recipe
-  (defn get-comments [recipe]
-    (into  [] (sql/query spec ["SELECT comment.text,user.username  FROM user JOIN comment ON user.id=comment.user JOIN recipe ON recipe.id=comment.recipe WHERE recipe.title = ? " recipe])
+  (defn get-comments [id]
+    (into  [] (sql/query spec ["SELECT comment.text,user.username  FROM user JOIN comment ON user.id=comment.user JOIN recipe ON recipe.id=comment.recipe WHERE recipe.id = ? " id])
   )
     )
   ;;inserting comment
