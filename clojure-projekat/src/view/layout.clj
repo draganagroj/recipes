@@ -31,7 +31,7 @@
     [:a.navbar-brand {:href "#"} "Healthy lifestyle"]
     ]
    [:ul.nav.navbar-nav
-    [:li [:a {:href "/"}"Home" ]]
+    [:li.active [:a {:href "/"}"Home" ]]
     (when (not (nil? (session/get :user)))
      (list[:li [:a {:href "/new"}"Add recipe" ]]
       [:li [:a {:href "/myrecipes"} "My recipes" ]])
@@ -43,7 +43,7 @@
           [:li 
           (form/form-to  {:role "form" :id "search-form" :class "form-inline"}[:post "/"]
           (form/text-field {:class "form-control" :placeholder "search"} :search "")
-          (form/submit-button  {:class "btn"} "submit"))]
+          (form/submit-button  {:class "btn"} "search"))]
     [:li [:a {:href "/#"}
            [:span.glyphicon.glyphicon-user]
            (session/get :user)]]
@@ -75,7 +75,149 @@
    
   )
 
+
+;;new 
+(defn navbar-new []
+  [:nav.navbar.navbar-default
+  [:div.container-fluid
+   [:div.navbar-header
+    [:a.navbar-brand {:href "#"} "Healthy lifestyle"]
+    ]
+   [:ul.nav.navbar-nav
+    [:li [:a {:href "/"}"Home" ]]
+    (when (not (nil? (session/get :user)))
+     (list[:li.active [:a {:href "/new"}"Add recipe" ]]
+      [:li [:a {:href "/myrecipes"} "My recipes" ]])
+    )
+    ]
+   (if
+     (not(nil?(session/get :user)))
+   (list [:ul.nav.navbar-nav.navbar-right
+         
+    [:li [:a {:href "/#"}
+           [:span.glyphicon.glyphicon-user]
+           (session/get :user)]]
+       [:li [:a {:href "/logout"}
+           [:span.glyphicon.glyphicon-log-out]
+           "Logout"]
+     ]
+    ])
+   (list
+   [:ul.nav.navbar-nav.navbar-right
+     [:li 
+          (form/form-to  {:role "form" :id "search-form" :class "form-inline"}[:post "/"]
+          
+           (form/text-field {:class "form-control" :placeholder "search"} :search "")    
+          (form/submit-button {:class "btn" } 
+         "Search"
+           ))]
+     [:li [:a {:href "/register"}
+           [:span.glyphicon.glyphicon-user]
+           "Sign up"]]
+      [:li [:a {:href "/login"}
+           [:span.glyphicon.glyphicon-log-in]
+           "Login"]]
+     ])
+    )
+   ]]
+   
+  )
+;;show recipe navbar
+(defn navbar-show-recipe []
+  [:nav.navbar.navbar-default
+  [:div.container-fluid
+   [:div.navbar-header
+    [:a.navbar-brand {:href "#"} "Healthy lifestyle"]
+    ]
+   [:ul.nav.navbar-nav
+    [:li [:a {:href "/"}"Home" ]]
+    (when (not (nil? (session/get :user)))
+     (list[:li [:a {:href "/new"}"Add recipe" ]]
+      [:li [:a {:href "/myrecipes"} "My recipes" ]])
+    )
+    ]
+   (if
+     (not(nil?(session/get :user)))
+   (list [:ul.nav.navbar-nav.navbar-right
+         
+    [:li [:a {:href "/#"}
+           [:span.glyphicon.glyphicon-user]
+           (session/get :user)]]
+       [:li [:a {:href "/logout"}
+           [:span.glyphicon.glyphicon-log-out]
+           "Logout"]
+     ]
+    ])
+   (list
+   [:ul.nav.navbar-nav.navbar-right
+     [:li 
+          (form/form-to  {:role "form" :id "search-form" :class "form-inline"}[:post "/"]
+          
+           (form/text-field {:class "form-control" :placeholder "search"} :search "")    
+          (form/submit-button {:class "btn" } 
+         "Search"
+           ))]
+     [:li [:a {:href "/register"}
+           [:span.glyphicon.glyphicon-user]
+           "Sign up"]]
+      [:li [:a {:href "/login"}
+           [:span.glyphicon.glyphicon-log-in]
+           "Login"]]
+     ])
+    )
+   ]]
+   
+  )
+
  
+;;recipes
+(defn navbar-my-recipes []
+  [:nav.navbar.navbar-default
+  [:div.container-fluid
+   [:div.navbar-header
+    [:a.navbar-brand {:href "#"} "Healthy lifestyle"]
+    ]
+   [:ul.nav.navbar-nav
+    [:li [:a {:href "/"}"Home" ]]
+    (when (not (nil? (session/get :user)))
+     (list[:li [:a {:href "/new"}"Add recipe" ]]
+      [:li.active [:a {:href "/myrecipes"} "My recipes" ]])
+    )
+    ]
+   (if
+     (not(nil?(session/get :user)))
+   (list [:ul.nav.navbar-nav.navbar-right
+         
+    [:li [:a {:href "/#"}
+           [:span.glyphicon.glyphicon-user]
+           (session/get :user)]]
+       [:li [:a {:href "/logout"}
+           [:span.glyphicon.glyphicon-log-out]
+           "Logout"]
+     ]
+    ])
+   (list
+   [:ul.nav.navbar-nav.navbar-right
+     [:li 
+          (form/form-to  {:role "form" :id "search-form" :class "form-inline"}[:post "/"]
+          
+           (form/text-field {:class "form-control" :placeholder "search"} :search "")    
+          (form/submit-button {:class "btn" } 
+         "Search"
+           ))]
+     [:li [:a {:href "/register"}
+           [:span.glyphicon.glyphicon-user]
+           "Sign up"]]
+      [:li [:a {:href "/login"}
+           [:span.glyphicon.glyphicon-log-in]
+           "Login"]]
+     ])
+    )
+   ]]
+   
+  )
+
+
 ;;footer
 (defn footer []
   

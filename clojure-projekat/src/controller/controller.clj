@@ -15,21 +15,19 @@
                  [compojure.route :as route]
                   [noir.validation :as valid]
                   [noir.util.middleware :as util]
-                  [view.index :as index]
+                  [view.index :refer [index-route]]
                   [view.registration :refer [registration]]
                   [view.login :refer [login]]
                   [view.new-recipe :refer [recipe]]
                   [view.show-recipe :refer [show]]
                   [view.recipes :refer [my-recipes]]
+                 
                   )
   )
 
 
 
-(defroutes index
-  (GET "/" [] (index/index))
-  
-  )
+
 (defroutes app-routes
   (route/resources "/")
   (route/not-found "Not Found"))
@@ -40,7 +38,7 @@
                 recipe
                 show
                 registration
-                index
+                index-route
                 login
                 my-recipes
                 app-routes

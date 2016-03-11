@@ -100,7 +100,7 @@
 (defn show-selected
   [id]
    (layout/common "Recipe"
-                  (layout/navbar)
+                  (layout/navbar-show-recipe)
                    (recipe-display id)
                    ( when (not(nil?(session/get :user)))
                 (like-dis id))

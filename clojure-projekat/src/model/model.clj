@@ -49,10 +49,7 @@
   (defn recipe-details [id]
     (conj (get-recipe id) (username-recipe id))
     )
-  
-  (defn search-recipe [search]
-    
-    )
+ 
 
 ;;getting the user from db
 (defn user [name pass]
@@ -190,4 +187,15 @@
 (defn return-titles [user]
   (vec(map  :title (liked user)))
 )
+;;return recipes most liked - ascending
+(defn best-recipe []
+  (into [](sql/query spec ["SELECT recipe.id,recipe.title,recipe.body,SUM(rating.value) FROM recipe JOIN rating ON recipe.id=rating.recipe GROUP BY recipe.id"]))
+  
+  )
+ ;;return recipes that contain search word
+  (defn search-recipe [search]
+    (into [](sql/query spec ["SELECT recipe.id,recipe.title,recipe.body,SUM(rating.value) FROM recipe JOIN rating ON recipe.id=rating.recipe WHERE recipe.title LIKE ? GROUP BY recipe.id" (str "%" search "%")] ))
+  
+    )
+
 

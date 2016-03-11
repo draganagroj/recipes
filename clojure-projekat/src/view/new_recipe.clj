@@ -13,7 +13,7 @@
 
 (defn new-recipe [message]
   (layout/common "New recipe"
-    (layout/navbar)              
+    (layout/navbar-new)              
                  
 (form/form-to  {:role "form" :id "login-form" :class "form-horizontal"}[:post "/new"]
 [:div {:class "form-group"}

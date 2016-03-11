@@ -13,7 +13,7 @@
 
 (defn recipe [recipes]
     (layout/common "Recipes"
-                  (layout/navbar)
+                  (layout/navbar-my-recipes)
      [:div.containter  {:style "width:75% ; margin:auto"}
       [:table.col-md-8 {:style " width:100%; "}
        [:tbody
