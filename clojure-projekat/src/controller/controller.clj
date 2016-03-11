@@ -20,6 +20,7 @@
                   [view.login :refer [login]]
                   [view.new-recipe :refer [recipe]]
                   [view.show-recipe :refer [show]]
+                  [view.recipes :refer [my-recipes]]
                   )
   )
 
@@ -41,7 +42,7 @@
                 registration
                 index
                 login
-               
+                my-recipes
                 app-routes
                 ))
 (session/wrap-noir-session 

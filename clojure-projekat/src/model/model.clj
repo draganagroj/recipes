@@ -96,6 +96,10 @@
    (sql/execute! spec ["UPDATE rating SET rating.value=? WHERE rating.user=? AND rating.recipe=?" value (user-id user) recipe])
   )
 
+;;get the recipies of logged user
+(defn my-recipes [user]
+  (into [](sql/query spec ["SELECT id,title,body from recipe where user=?" (user-id user)]))
+  )
 
 ;;inserting default rating for all recepies
 (defn rating-def 

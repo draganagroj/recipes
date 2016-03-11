@@ -87,12 +87,14 @@
   )
 
 (defn recomendation [id]
-  [:div.col-md-offset-3.col-md-6 "Recommended recepies"]
+   [:div.col-md-offset-3.col-md-6 {:style " border: 2px dashed #777; border-radius:10px; margin-top:10px"}
+    [:p.col-md-offset-4 {:style "font-style:italic ; font-size:medium"} "Recommended recipes"]
  (for [title (recommended-titles id)]
    [:div.row 
-     [:div.col-md-offset-3.col-md-6
-   [:a {:href (get-id title)} title]]]
+    
+   [:a {:href (get-id title) :style "margin-left:5%"} title]]
    )
+ ]
   )
 
 (defn show-selected

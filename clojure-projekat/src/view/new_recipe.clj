@@ -6,6 +6,7 @@
              [view.layout :as layout]
              [compojure.core :refer [defroutes GET POST ]]
              [noir.validation :refer [has-value?]]
+             [noir.response :refer [redirect]]
              
    )
   )
@@ -38,8 +39,14 @@
 
 (defroutes recipe
   
- (GET "/new" [] (new-recipe ""))
-  (POST "/new" [title text] (do(model/insert-recipe title text (session/get :user))
-                              (new-recipe (model/insert-def-rat ) )
-                              )))
+ (GET "/new" [] 
+        (if (nil?(session/get :user))
+           (redirect "/")
+      (new-recipe "")))
+  (POST "/new" [title text] 
+        (do(model/insert-recipe title text (session/get :user))
+          (new-recipe (model/insert-def-rat ))
+          )
+        )
+         )
   

@@ -20,12 +20,12 @@
 [:div {:class "form-group"}
 (form/label {:class "reg-label control-label col-md-2"} "name" "username:")
 [:div.col-md-9
-(form/text-field  {:class "form-control"} :name "")]]
+(form/text-field  {:class "form-control"  :required "required"} :name "")]]
 [:br]
 [:div {:class "form-group"}
  (form/label {:class "reg-label control-label col-md-2"} "pass" "password:")
  [:div.col-md-9
-(form/password-field  {:class "form-control"} :pass )]]
+(form/password-field  {:class "form-control"  :required "required"} :pass )]]
 [:br]
 (form/submit-button {:class "btn btn-info col-md-offset-5"} "login"))]
  (when (= message "Login error" )

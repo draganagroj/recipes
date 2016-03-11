@@ -12,7 +12,7 @@
 ;; registration page
 (defn registration-page [message]
 (layout/common "Register"
-               
+               [:div.row
 [:div.col-md-offset-3.col-md-6 
  [:div {:class "border-div"}
  [:h2.col-md-offset-4 {:id "reg-title"} "Registration form"]
@@ -25,12 +25,12 @@
  [:div {:class "form-group"}
 (form/label {:class "reg-label control-label col-md-2"} "pass" "password:")
 [:div.col-md-9
-(form/password-field {:class "form-control"} "pass")]]
+(form/password-field {:class "form-control"  :required "required"} "pass")]]
 [:br]
  [:div {:class "form-group"}
-(form/label {:class "reg-label control-label col-md-2"}"pass1" "retype password:")
+(form/label {:class "reg-label control-label col-md-2"  :required "required"}"pass1" "retype password:")
 [:div.col-md-9
-(form/password-field  {:class "form-control"}"pass1")]]
+(form/password-field  {:class "form-control"  :required "required"}"pass1")]]
 [:br]
 (form/submit-button {:class "btn btn-info col-md-offset-5"} "create account"))
 ]
@@ -38,14 +38,23 @@
 (and  (has-value? message) (not(= message "Error"))) 
 [:div
   [:div {:class "first"} message ]
-[:div.alert.alert-success "You successfuly registered"] ])
+[:div.alert.alert-success "You successfuly registered"] ]
+
+)
   
 (when (and (has-value? message ) (= message "Error") )
   [:div
   [:div {:class "first"} message ]
  [:div.alert.alert-danger message]])
+]]
+               
+[:div.row.col-md-offset-7
+[:p.col-md-offset-8 {:style "color:#555"} "return to homepage"]
+ [:a.col-md-offset-9 {:href "/"} 
+ [:span.glyphicon.glyphicon-arrow-right {:style "font-size:3em ; color:#46b8da"}]]
+ ]
+ 
 
-]
   )
 )
 
