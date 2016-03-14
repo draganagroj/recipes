@@ -12,6 +12,7 @@
   )
 
 (defn new-recipe [message]
+  "new recipe page"
   (layout/common "New recipe"
     (layout/navbar-new)              
                  
@@ -38,7 +39,7 @@
   ))
 
 (defroutes recipe
-  
+  "new recipe routes"
  (GET "/new" [] 
         (if (nil?(session/get :user))
            (redirect "/")

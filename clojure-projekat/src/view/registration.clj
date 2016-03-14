@@ -9,8 +9,9 @@
               [noir.validation :refer [has-value?]]
              )
   )
-;; registration page
+
 (defn registration-page [message]
+  "registration page"
 (layout/common "Register"
                [:div.row
 [:div.col-md-offset-3.col-md-6 
@@ -60,22 +61,20 @@
 
 
 (defn registration-handler [name pass pass1]
+  "checking whether password matches repeated password"
    (if (= pass pass1)  
               (do 
-             
               (model/create-user name pass)
-              
-            (registration-page  (model/rating-def name)  
-              )
+              (registration-page  (model/rating-def name) )
               )  
             (registration-page "Error")
   )
    )
 
 (defroutes registration
-  (GET "/register" [] (registration-page ""))
- (POST "/register" [name pass pass1]
-       (registration-handler name pass pass1)
+  "registration routes"
+(GET "/register" [] (registration-page ""))
+(POST "/register" [name pass pass1] (registration-handler name pass pass1)
          ))
           
     

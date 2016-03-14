@@ -12,10 +12,12 @@
   )
 
 (defn recipe [recipes]
+  "my recipes page"
     (layout/common "Recipes"
-                  (layout/navbar-my-recipes)
-     [:div.containter  {:style "width:75% ; margin:auto"}
-      [:table.col-md-8 {:style " width:100%; "}
+     (layout/navbar-my-recipes)
+     [:row
+     [:div.table-responsive {:style "width:75% ; margin:auto"}
+      [:table.col-md-8 {:style " width:100%;margin-bottom:20px "}
        [:tbody
        
          (for [recipe recipes]
@@ -28,15 +30,16 @@
        ]
    
     ]
-        ]          
+        ]  ]        
      (layout/footer)
                   )
   )
 
 (defroutes my-recipes
+  "my recipe routes "
   (GET "/myrecipes" []
        (if (nil?(session/get :user))
-         (redirect "/")
-       (recipe (model/my-recipes (session/get :user)) ))
+           (redirect "/")
+           (recipe (model/my-recipes (session/get :user)) ))
        )
   )

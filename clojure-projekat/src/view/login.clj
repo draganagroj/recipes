@@ -10,7 +10,8 @@
   ))
 
   
-  (defn login-page
+(defn login-page
+  "login page"
  [message]  
   (layout/common "Logging"
 [:div.col-md-offset-3.col-md-6 
@@ -37,25 +38,25 @@
    
     )
 (defn login-check [name pass]
+  "cheking whether user has registered first"
      (if (not (empty? (model/user name pass) ))
-           (do (session/put! :user name)
-             
+           (do (session/put! :user name)  
                (redirect "/"))
-           
            (login-page "Login error"))
            )         
    
   
 (defroutes login
-    (GET "/login" [] (login-page ""))
-    (GET "/logout" [] 
-         (do
-         (session/clear!)
-         (redirect "/")))
+  "login/logut routes"
+ (GET "/login" [] (login-page ""))
+ (GET "/logout" [] 
+      (do
+      (session/clear!)
+      (redirect "/")))
   (POST "/login" [name pass]        
           (if (= true (clojure.string/blank? name))
-             (login-page "Login error")
-            (login-check name pass)
+              (login-page "Login error")
+              (login-check name pass)
             )         
           ) 
  )
