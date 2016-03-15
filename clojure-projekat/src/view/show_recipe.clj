@@ -30,7 +30,7 @@
 (defn like-dis [id]
   "display like and dislike buttons"
    [:div.row {:style "margin-left:0px; margin-right:0px; margin-bottom:20px"}
-   [:div{:style "margin-top:20px; margin-left:44% "}
+   [:div{:style "margin-top:20px; margin-left:46% "}
    (form/form-to  {:role "form" :class "form-btn"} [:post (str "/show/" id) ] 
         (form/text-field {:style "display:none"} "like" "like")
         (form/submit-button {:class "btn btn-default" :id "like"} "" ) )
@@ -87,15 +87,21 @@
   (str "/show/"(model/recipe-id title))
   )
 
+
 (defn recomendation [id]
   "show recommended titles of recipes"
-   [:div.col-md-offset-3.col-md-6 {:style " border: 2px dashed #777; border-radius:10px; margin-top:10px"}
+  (if
+    (not(empty?( recommended-titles id)))
+     [:div.col-md-offset-3.col-md-6 {:style " border: 2px dashed #777; border-radius:10px; margin-top:10px"}
     [:p.col-md-offset-4 {:style "font-style:italic ; font-size:medium"} "Recommended recipes"]
      (for [title (recommended-titles id)]
        [:div.row {:style "margin-left:0px; margin-right:0px ;margin-bottom:10px"}
        [:a {:href (get-id title) :style "margin-left:5%"} title]]
+       
+    )
+  ]
        )
- ]
+ 
   )
 
 (defn show-selected

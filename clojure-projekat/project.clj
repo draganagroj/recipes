@@ -16,7 +16,11 @@
                 ]
 
 :plugins [[lein2-eclipse "2.0.0"]
-            [lein-ring "0.8.10"]]
+            [lein-ring "0.8.10"]
+            [lein-midje "3.1.3"]
+            ]
 
 :ring {:handler controller.controller/app}
+
+:profiles {:dev {:dependencies [[midje "1.6.3"]]}}
 )
