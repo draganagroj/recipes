@@ -2,11 +2,12 @@
 
 This project is made for subject on master studies "Tools and methods of Software engineering". It is done in function language - Clojure.
  
-It represents on-line application for recipes, where users can register,login and post their recipes. If user is not logged, he can only see most popular ones and search them. Users who are logged-in can add new recipe, see their recipes, leave comments on recipes and also get recommendations for other recipes based on likings of most similar user. 
+It represents on-line application for recipes, where users can register,login and post their recipes. If user is not logged, he can only see recipes and search them by title. Users who are logged-in can add new recipe, see recipes they wrote, leave comments on recipes and also get recommendations for other recipes based on likings of most similar user. 
 
 ##Requirements 
 
 This application needs Leiningen 2.0.0
+
  
 ##Libraries
 
@@ -28,6 +29,7 @@ There were several libraries used in this application:
  
  midje - for testing business logic
  
+ For storing the recipes MySQL database was used
  
 ##Starting application
 
