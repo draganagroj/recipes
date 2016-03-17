@@ -25,10 +25,20 @@
   (into [] (flatten(subvec(sql/query spec ["SELECT id FROM user"] :as-arrays? true )1)))
   )
 
+(defn exists-username [username]
+  "does username already exists in db"
+  (into [] (sql/query spec ["SELECT username FROM user WHERE username=?" username])))
+     
+      
+   
 
 (defn create-user [name pass]
   "inserting new user into db"
- (sql/execute! spec ["INSERT INTO user (username,password)  VALUES(?,?) " name pass])
+  (cond (clojure.string/blank? name) (throw (Exception. "username is null"))
+        (clojure.string/blank? pass ) (throw (Exception. "password is null"))
+        :else  (sql/execute! spec ["INSERT INTO user (username,password)  VALUES(?,?) " name pass])
+    )
+
   )
 
 (defn get-comments [id]
@@ -58,9 +68,13 @@
   )
 
 (defn user [name pass]
-  "getting the user from db"
- (into  [] (sql/query spec ["SELECT username, password FROM user WHERE username = ? AND password = ?" name pass])
-  ))
+   "getting the user from db"
+  (cond 
+     (clojure.string/blank? name) (throw (Exception. "username is null"))
+     (clojure.string/blank? pass ) (throw (Exception. "password is null"))
+     :else
+ (into  [] (sql/query spec ["SELECT username, password FROM user WHERE username = ? AND password = ?" name pass]))
+ ))
 
 (defn recipe-id [title]
   "get id of a recipe"
@@ -73,21 +87,33 @@
 
 (defn user-id[name]
   "getting id of a user"
-   (:id(get(into  [] (sql/query spec ["SELECT id FROM user WHERE username = ? " name ])
-  )0)))
+ (cond 
+   (clojure.string/blank? name) (throw (Exception. "username is null"))
+   (= nil(:id(get(into  [] (sql/query spec ["SELECT id FROM user WHERE username = ? " name ]))0)))
+                                        (throw (Exception. "username is null"))
+ :else (:id(get(into  [] (sql/query spec ["SELECT id FROM user WHERE username = ? " name ]))0))
+  ))
 
  
 (defn insert-commment [comment,user,recipe]
-  "inserting comment"
-    (sql/execute! spec ["INSERT INTO comment (text, user,recipe) VALUES (?,?,?)" comment (user-id user) recipe ] )
-    )
+ "inserting comment"
+ (cond (clojure.string/blank? comment) (throw (Exception. "comment is null"))
+       (clojure.string/blank? user)(throw (Exception. "user is null"))
+        
+        
+  :else  (sql/execute! spec ["INSERT INTO comment (text, user,recipe) VALUES (?,?,?)" comment (user-id user) recipe ] )
+    ))
   
     
 (defn insert-recipe [title body user]
   "insert recipe"
-  (get(into [](sql/execute! spec ["INSERT INTO recipe (title,body,user) VALUES (?,?,?)" title body (user-id user)] )
-  )0))
-
+   (cond (clojure.string/blank? title) (throw (Exception. "title is null"))
+         (clojure.string/blank? body)(throw (Exception. "body is null"))
+        (clojure.string/blank? user)(throw (Exception. "user is null"))
+   :else (get(into [](sql/execute! spec ["INSERT INTO recipe (title,body,user) VALUES (?,?,?)" title body (user-id user)] )
+  )0)
+   )
+)
 
 (defn max-id []
   "max recipe id"
@@ -173,9 +199,11 @@
 (defn find-closest
   "find closest user in user map to supplied user"
   [user users]   
-   (apply min-key (partial euclidean-distance user) (vals users)))
-
- 
+  (if (not(empty? users))
+  (apply min-key (partial euclidean-distance user) (vals users))
+  (empty [])
+  )
+)
 (defn get-closest [user]
   "gets vestor of ratings of most similar users"
   (find-closest (user-vector user) (remove-current user))
@@ -213,12 +241,12 @@
 
 (defn best-recipe []
   "return recipes most liked - descending"
-  (into [](sql/query spec ["SELECT recipe.id,recipe.title,recipe.body,SUM(rating.value) FROM recipe JOIN rating ON recipe.id=rating.recipe GROUP BY recipe.id"]))
+  (into [](sql/query spec ["SELECT recipe.id,recipe.title,recipe.body,SUM(rating.value) FROM recipe JOIN rating ON recipe.id=rating.recipe GROUP BY recipe.id ORDER BY SUM(rating.value) DESC "]))
   
   )
  
 (defn search-recipe [search]
   "return recipes that contain search word"
-    (into [](sql/query spec ["SELECT recipe.id,recipe.title,recipe.body,SUM(rating.value) FROM recipe JOIN rating ON recipe.id=rating.recipe WHERE recipe.title LIKE ? GROUP BY recipe.id" (str "%" search "%")] ))
+    (into [](sql/query spec ["SELECT recipe.id,recipe.title,recipe.body,SUM(rating.value) FROM recipe JOIN rating ON recipe.id=rating.recipe WHERE recipe.title LIKE ? GROUP BY recipe.id ORDER BY SUM(rating.value) DESC" (str "%" search "%")] ))
   
     )

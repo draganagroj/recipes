@@ -13,7 +13,7 @@
 (defn registration-page [message]
   "registration page"
 (layout/common "Register"
-               [:div.row
+               [:div.row {:style "margin-right:0px"}
 [:div.col-md-offset-3.col-md-6 
  [:div {:class "border-div"}
  [:h2.col-md-offset-4 {:id "reg-title"} "Registration form"]
@@ -36,7 +36,7 @@
 (form/submit-button {:class "btn btn-info col-md-offset-5"} "create account"))
 ]
 (when
-(and  (has-value? message) (not(= message "Error"))) 
+(and  (has-value? message) (not(= message "Error")) (not(= message "Username already exists"))) 
 [:div
   [:div {:class "first"} message ]
 [:div.alert.alert-success "You successfuly registered"] ]
@@ -47,16 +47,25 @@
   [:div
   [:div {:class "first"} message ]
  [:div.alert.alert-danger message]])
+
+(when (and (has-value? message ) (= message "Username already exists") )
+  [:div
+  [:div {:class "first"} message ]
+ [:div.alert.alert-danger message]])
+
 ]]
                
-[:div.row.col-md-offset-7
+[:div.row.col-md-offset-7 {:style "margin-right:0px"}
 [:p.col-md-offset-8 {:style "color:#555"} "return to homepage"]
  [:a.col-md-offset-9 {:href "/"} 
  [:span.glyphicon.glyphicon-arrow-right {:style "font-size:3em ; color:#46b8da"}]]
  ]
- 
+
 
   )
+
+
+
 )
 
 
@@ -64,8 +73,15 @@
   "checking whether password matches repeated password"
    (if (= pass pass1)  
               (do 
-              (model/create-user name pass)
-              (registration-page  (model/rating-def name) )
+                (if (not(empty?(model/exists-username name)) )
+                  
+                     (registration-page "Username already exists")
+                     
+                     (do(model/create-user name pass)
+                     (registration-page  (model/rating-def name) ))
+                  )
+                
+            
               )  
             (registration-page "Error")
   )

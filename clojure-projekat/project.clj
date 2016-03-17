@@ -22,5 +22,7 @@
 
 :ring {:handler controller.controller/app}
 
-:profiles {:dev {:dependencies [[midje "1.6.3"]]}}
+:profiles {:dev {:dependencies [[midje "1.6.3"]
+                                [ring/ring-mock "0.3.0"]
+                                ]}}
 )

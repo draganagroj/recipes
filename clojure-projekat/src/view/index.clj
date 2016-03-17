@@ -22,7 +22,7 @@
        
          (for [recipe (model/best-recipe)]
       [:tr {:style "height:100px ; border-top: 2px dashed #46b8da; border-bottom: 2px dashed #46b8da ;"}
-       [:td  {:style "color: #555; font-weight:bold"} (:title recipe)]
+       [:td  {:style "color: #555; font-weight:bold; padding-right:20px"} (:title recipe)]
        [:td  {:style "color: #555; font-style:italic"} (str (subs (:body recipe) 0 200) "...") [:a {:href (str "/show/" (:id recipe))} "  see whole recipe"]]
        ]
       ) 
