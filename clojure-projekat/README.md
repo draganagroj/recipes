@@ -29,6 +29,7 @@ There were several libraries used in this application:
  
  midje - for testing business logic
  
+ 
  For storing the recipes MySQL database was used
  
 ##Starting application
@@ -36,6 +37,12 @@ There were several libraries used in this application:
 To start application on localhost from command line type the command :
 
       lein ring server 
+
+##Testing
+
+To start the tests from command line type the command:
+
+		lein midje :autotest
 
 ##References
 

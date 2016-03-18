@@ -199,9 +199,10 @@
 (defn find-closest
   "find closest user in user map to supplied user"
   [user users]   
-  (if (not(empty? users))
-  (apply min-key (partial euclidean-distance user) (vals users))
+  (if (empty? users)
   (empty [])
+  (apply min-key (partial euclidean-distance user) (vals users))
+  
   )
 )
 (defn get-closest [user]
@@ -224,8 +225,11 @@
 
 (defn return-similar [user]
    "return similar user"
+  (if (= nil(get-key user))
+    (empty [])
   (into [] (sql/query spec [ "SELECT  user.username, recipe.title, rating.value FROM user JOIN rating ON user.id=rating.user JOIN recipe ON recipe.id=rating.recipe WHERE user.username=?" 
  (name(get-key user)) ]))
+ )
   )
 
 (defn liked [user]

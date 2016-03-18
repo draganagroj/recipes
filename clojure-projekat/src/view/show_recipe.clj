@@ -49,7 +49,7 @@
        [:div {:class "form-group"}
       (form/label {:class "reg-label control-label col-md-4" :style "margin-left:39%"} "c" "leave comment")
         [:div.col-md-12
-          (form/text-field {:class "form-control" :style "width: 99%;margin-left: -1px: margin-top:10px;margin-bottom:10px"} "comment" "" )]
+          (form/text-field {:class "form-control" :required "required" :style "width: 99%;margin-left: -1px: margin-top:10px;margin-bottom:10px"} "comment" "" )]
             [:br]
             [:br]
             ]
@@ -94,11 +94,18 @@
     (not(empty?( recommended-titles id)))
      [:div.col-md-offset-3.col-md-6 {:style " border: 2px dashed #777; border-radius:10px; margin-top:10px"}
     [:p.col-md-offset-4 {:style "font-style:italic ; font-size:medium"} "Recommended recipes"]
+    (if (>(count(recommended-titles id))3 )
+    (for [title (take 3(recommended-titles id))]
+       [:div.row {:style "margin-left:0px; margin-right:0px ;margin-bottom:10px"}
+       [:a {:href (get-id title) :style "margin-left:5%"} title]]
+       )
      (for [title (recommended-titles id)]
        [:div.row {:style "margin-left:0px; margin-right:0px ;margin-bottom:10px"}
        [:a {:href (get-id title) :style "margin-left:5%"} title]]
-       
+       )
     )
+    
+    
   ]
        )
  

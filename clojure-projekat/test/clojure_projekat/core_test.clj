@@ -5,10 +5,9 @@
             [clojure-projekat.tests :as t]
              [ring.mock.request :as mock]
              [controller.controller :as cont]
-           )
-  )
+           ))
 
-(against-background [(before :contents (model/create-user "Dragana" "dragana")) (after :contents (t/clear-user "Dragana"))]
+(against-background [(before :contents (t/preparing-all-users)) (after :contents (t/clear-user "Dragana"))]
 (facts "all users"                 
 (fact (model/all-users) => ["Dragana"])
 (fact (model/all-users) => (one-of string? ))
@@ -20,7 +19,6 @@
 (facts "are all ids numbers"
 (fact (model/all-users-id) => (has every? number?)))
 )
-
 
 (deftest inserting-user
   (testing "inserting user with valid username and password"

@@ -128,7 +128,8 @@
 
 (defn prepare-ids-numbers []
   "setup ids"
- ( do(model/create-user "Dragana" "dragana")(model/create-user "Ena" "ena"))
+ ( do(model/create-user "Dragana" "dragana")
+   (model/create-user "Ena" "ena"))
   )
 
 (defn after-ids-numbers []
@@ -138,8 +139,20 @@
     )
   )
 
+(defn delete-all-recipes []
+  (sql/execute! model/spec ["DELETE FROM recipe"])
+  )
+(defn delete-all-users[]
+  (sql/execute! model/spec ["DELETE FROM user"])
+  )
 
- 
+ (defn preparing-all-users []
+   (do 
+     (delete-all-recipes)
+     (delete-all-users)
+     (model/create-user "Dragana" "dragana")
+     )
+   )
 
   
 
