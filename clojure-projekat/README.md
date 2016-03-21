@@ -34,9 +34,9 @@ There were several libraries used in this application:
  
 ##Starting application
 
-Before starting the application, first import database (execute recipe.sql) in RDBMS MySQL. 
+Before starting the application, first connect to MySQL with root user (username = root, password = "") and then import database (execute recipe.sql) in RDBMS MySQL. 
 
-Then, to start application on localhost from command line type the command :
+Finally, to start application on localhost from command line type the command :
 
       lein ring server 
 
