@@ -52,16 +52,21 @@
    )                   
                     )
 
+
+
+(against-background [(before :contents (t/prepare-get-comments)) (after :contents (t/after-get-comments))]
+(facts "getting comments for recipe"
+ (fact (model/get-comments (model/recipe-id "First"))=> [{:text "nice", :username "Dragana"}])
+ (fact (model/get-comments "")=> [])
+ (fact (model/get-comments 1)=> [] ))
+)
+
 (deftest insert-comments
  (testing "inserting comment with all valid valid values"
   (t/prepare-insert-comment)     
   (try 
   (model/insert-commment "nice" "Dragana" (model/recipe-id "First"))
    (finally (t/clear-comments)) ))
-   (testing "inserting comment for non existing recipe id"
-   (t/prepare-insert-comment) 
-   (try 
-     (is (thrown? Exception (model/insert-commment "Nice" "Dragana" 1)))(finally (t/clear-comments))))
   (testing "inserting comment for non existing username "
   (try 
      (t/prepare-insert-comment)
@@ -73,13 +78,6 @@
     (finally (t/clear-comments)) ))
    (t/after-insert-comment)
    )
-
-(against-background [(before :contents (t/prepare-get-comments)) (after :contents (t/after-get-comments))]
-(facts "getting comments for recipe"
- (fact (model/get-comments (model/recipe-id "First"))=> [{:text "nice", :username "Dragana"}])
- (fact (model/get-comments "")=> [])
- (fact (model/get-comments 1)=> [] ))
-)
 
 
 (deftest insert-recipe
@@ -120,28 +118,6 @@
  (fact (model/get-recipe (model/recipe-id "Second") )=> nil ))
 )
 
-(deftest update-rating 
-  (testing "updating defaut rating with valid values"
-  (t/prepare-rating)  
-   (try 
-  (model/update-rating 1 "Dragana" (model/recipe-id "First") )
-   (finally (t/after-rating)) ))
-    (testing "updating defaut rating with unknown user"
-  (t/prepare-rating)  
-   (try 
-  (is (thrown? Exception (model/update-rating 1 "" (model/recipe-id "First"))))
-   (finally (t/after-rating)) ))
-     (testing "updating defaut rating with not existing username"
-  (t/prepare-rating)  
-   (try 
-  (is (thrown? Exception (model/update-rating 1 "Ena" (model/recipe-id "First"))))
-   (finally (t/after-rating)) ))
-   (testing "updating defaut rating with not existing recipe title"
-  (t/prepare-rating)  
-   (try 
-  (is (thrown? Exception (model/update-rating 1 "Ena" (model/recipe-id "Second"))))
-   (finally (t/after-rating)) ))
-     )
 
     (against-background [(before :contents (t/prepare-making-keys)) (after :contents (t/after-making-keys))]
     (facts "are all elements keywords"

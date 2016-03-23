@@ -30,11 +30,9 @@ There were several libraries used in this application:
  midje - for testing business logic
  
  
- For storing the recipes MySQL database was used
+ For storing the recipes SQLite database was used.
  
 ##Starting application
-
-Before starting the application, first connect to MySQL with root user (username = root, password = "") and then import database (execute recipe.sql) in RDBMS MySQL. 
 
 Finally, to start application on localhost from command line type the command :
 

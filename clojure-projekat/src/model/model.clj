@@ -8,11 +8,10 @@
 
 (def spec 
   "db properties"
-  {:classname "com.mysql.jdbc.Driver"
-   :subprotocol "mysql"
-   :subname "//127.0.0.1:3306/clojure"
-   :user "root"
-   :password ""})
+  {:classname "org.sqlite.JDBC"
+   :subprotocol "sqlite"
+   :subname "recipe.db"
+   })
 
 
 (defn all-users []

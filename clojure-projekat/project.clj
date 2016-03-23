@@ -12,7 +12,9 @@
                  [org.clojure/java.jdbc "0.4.2"]
                  [mysql/mysql-connector-java "5.1.38"]
                  [lib-noir "0.9.9"]
-                  [org.clojure/math.numeric-tower "0.0.4"]           
+                  [org.clojure/math.numeric-tower "0.0.4"] 
+                  [org.xerial/sqlite-jdbc "3.7.2"]
+                  
                 ]
 
 :plugins [[lein2-eclipse "2.0.0"]

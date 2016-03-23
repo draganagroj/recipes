@@ -6,6 +6,9 @@
 (defn clear-comments []
      (sql/execute! model/spec ["DELETE FROM comment"]) 
   )
+(defn delete-all-ratings []
+  (sql/execute! model/spec ["DELETE FROM rating"])
+  )
 
 (defn clear-user
   "clearing user after test"
@@ -90,22 +93,6 @@
     )
   )
 
-(defn prepare-rating []
-  "setup update rating"
-  (do
-   (model/create-user "Dragana" "dragana")
-   (model/insert-recipe "First" "first recipe" "Dragana"))
-    (model/insert-def-rat)
-    )
-
-  (defn after-rating []
-    "teardown update rating"
-     (do
-    (clear-recipe "First")
-    (clear-user "Dragana")   
-    )
-    )
-
 (defn prepare-making-keys []
   "setup for making keys"
    (do
@@ -114,10 +101,7 @@
     (model/create-user "Marko" "marko"))
   )
 
-(defn after-making-keys []
-  "teardown making keys"
-  (clear-users )
-  )
+
 
 (def sample 
   {:Dragana [1 1 1 1 1 1]
@@ -148,6 +132,7 @@
 
  (defn preparing-all-users []
    (do 
+      (delete-all-ratings)
      (delete-all-recipes)
      (delete-all-users)
      (model/create-user "Dragana" "dragana")
@@ -155,4 +140,8 @@
    )
 
   
-
+(defn after-making-keys []
+  "teardown making keys"
+  (do(clear-users)
+ 
+  ))
