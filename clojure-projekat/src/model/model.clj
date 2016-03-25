@@ -166,7 +166,6 @@
   "making a list of users and their ratings"
   (zipmap (making-keys)  (from-db)))
 
-
 (defn sqr
  "square two numbers"
   [x]
